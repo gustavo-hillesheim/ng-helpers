@@ -1,0 +1,9 @@
+<ng-template #template>
+  <tbody>
+    <tr *ngFor="let dataObj of data">
+      <td *ngFor="let property of objProperties(dataObj)">
+        {{ dataObj[property] }}
+      </td>
+    </tr>
+  </tbody>
+</ng-template>
