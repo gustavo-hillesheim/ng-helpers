@@ -13,7 +13,7 @@ type RowComparisonFn = (row1: RowData, row2: RowData) => boolean;
   templateUrl: './dynamic-tbody.component.html',
   styleUrls: ['./dynamic-tbody.component.css']
 })
-export class DynamicTbodyComponent implements OnInit {
+export class NhDynamicTbodyComponent implements OnInit {
 
   @Input() data: RowData[];
   @Input() showProperties: string[];
@@ -74,6 +74,7 @@ export class DynamicTbodyComponent implements OnInit {
   }
 
   createCellContextFrom(rowData: RowData, property: string, index: number): CellContext {
+    
     return {
       cellData: rowData[property],
       $implicit: rowData[property],
@@ -113,5 +114,25 @@ export class DynamicTbodyComponent implements OnInit {
       anySelected.push(rowData);
 
     this.selectedChange.next(this._selected);
+  }
+
+  showEditButton(rowData: RowData, index: number): boolean {
+
+    return typeof this.showEdit === 'boolean' ? this.showEdit : this.showEdit(rowData, index);
+  }
+
+  disableEditButton(rowData: RowData, index: number): boolean {
+
+    return typeof this.canEdit === 'boolean' ? this.canEdit : this.canEdit(rowData, index);
+  }
+
+  showDeleteButton(rowData: RowData, index: number): boolean {
+
+    return typeof this.showDelete === 'boolean' ? this.showDelete : this.showDelete(rowData, index);
+  }
+
+  disableDeleteButton(rowData: RowData, index: number): boolean {
+
+    return typeof this.canDelete === 'boolean' ? this.canDelete : this.canDelete(rowData, index);
   }
 }

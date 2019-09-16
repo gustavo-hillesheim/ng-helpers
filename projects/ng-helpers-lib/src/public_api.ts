@@ -3,4 +3,4 @@
  */
 
 export * from './lib/ng-helpers.module';
-export * from './lib/components/table';
+export * from './lib/dynamic/dynamic.module';

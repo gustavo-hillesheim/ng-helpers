@@ -1,20 +1,17 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { NhDynamicTheadComponent } from './components/table/dynamic-thead/dynamic-thead.component';
-import { DynamicTbodyComponent } from './components/table/dynamic-tbody/dynamic-tbody.component';
+import { NhDynamicModule } from './dynamic/dynamic.module';
 
 @NgModule({
   declarations: [
-    NhDynamicTheadComponent, 
-    DynamicTbodyComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    NhDynamicModule
   ],
   exports: [
-    NhDynamicTheadComponent, 
-    DynamicTbodyComponent
+    NhDynamicModule
   ]
 })
 export class NgHelpersModule { }

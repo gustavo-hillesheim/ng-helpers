@@ -1,0 +1,61 @@
+<ng-template #template>
+  <tbody>
+    <ng-container *ngFor="let rowData of data; let index=index; trackBy: trackRows">
+        <ng-container 
+          *ngTemplateOutlet="rowTemplate || defaultRowTemplate; context: createRowContextFrom(rowData, index)">
+        </ng-container>
+    </ng-container>
+  </tbody>
+</ng-template>
+
+<ng-template #defaultRowTemplate let-rowData let-index="index">
+  <tr>
+    <ng-container *ngIf="showSelect">
+      <ng-container
+        *ngTemplateOutlet="selectTemplate || defaultSelectTemplate; context: createRowContextFrom(rowData, index)">
+      </ng-container>
+    </ng-container>
+    <ng-container 
+      *ngFor="let property of objProperties(rowData); let index=index">
+      <ng-container 
+        *ngTemplateOutlet="cellTemplate || defaultCellTemplate; context: createCellContextFrom(rowData, property, index)">
+      </ng-container>
+    </ng-container>
+    <ng-container *ngIf="showActions">
+      <ng-container
+        *ngTemplateOutlet="actionsTemplate || defaultActionsTemplate; context: createRowContextFrom(rowData, index)">
+      </ng-container>
+    </ng-container>
+  </tr>
+</ng-template>
+
+<ng-template #defaultCellTemplate let-value>
+  <td>
+    {{ value }}
+  </td>
+</ng-template>
+
+<ng-template #defaultSelectTemplate let-rowData let-index="index">
+  <td>
+    <input 
+      type="checkbox"
+      [checked]="isSelected(rowData, index)"
+      [disabled]="canSelectRow(rowData, index)"
+      (change)="selectRow(rowData, index)">
+  </td>
+</ng-template>
+
+<ng-template #defaultActionsTemplate let-rowData let-index="index">
+  <button 
+    *ngIf="showEditButton(rowData, index)"
+    [disabled]="disableEditButton(rowData, index)"
+    (click)="edit.next({rowData: rowData, index: index})">
+    {{ editLabel }}
+  </button>
+  <button 
+    *ngIf="showDeleteButton(rowData, index)"
+    [disabled]="disableDeleteButton(rowData, index)"
+    (click)="delete.next({rowData: rowData, index: index})">
+    {{ deleteLabel }}
+  </button>
+</ng-template>
