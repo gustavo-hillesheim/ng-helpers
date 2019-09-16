@@ -1,9 +1,46 @@
 <ng-template #template>
   <thead>
     <tr>
-      <th *ngFor="let header of headers">
-        {{ header }}
-      </th>
+      <ng-container 
+        *ngIf="showSelectAll">
+        <ng-container
+          *ngTemplateOutlet="selectAllTemplate || defaultSelectAllTemplate">
+      </ng-container>
+      </ng-container>
+      <ng-container
+        *ngFor="let header of getHeaders() | async; let index=index; trackBy: trackHeaders">
+        <ng-container 
+          *ngTemplateOutlet="headerTemplate || defaultHeaderTemplate; context: createContextFrom(header, index)">
+        </ng-container>
+      </ng-container>
+      <ng-container
+        *ngIf="showActions">
+        <ng-container
+          *ngTemplateOutlet="actionsTemplate || defaultActionsTemplate">          
+        </ng-container>
+      </ng-container>
     </tr>
   </thead>
+</ng-template>
+
+<ng-template #defaultHeaderTemplate let-header="header" let-width="width">
+  <th [width]="width">
+    {{ header }}
+  </th>
+</ng-template>
+
+<ng-template #defaultSelectAllTemplate>
+  <th [width]="selectAllWidth">
+    <input type="checkbox" 
+      [checked]="_selectAll" 
+      [disabled]="!canSelectAll"
+      (change)="changeSelectAll()">
+    {{ selectAllHeader }}
+  </th>
+</ng-template>
+
+<ng-template #defaultActionsTemplate>
+  <th [width]="actionsWidth">
+    {{ actionsHeader }}
+  </th>
 </ng-template>

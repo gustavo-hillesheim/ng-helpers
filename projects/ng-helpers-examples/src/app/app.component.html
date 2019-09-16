@@ -1,4 +1,45 @@
-<table>
-  <nh-dynamic-thead [headers]="['header1', 'header2']"></nh-dynamic-thead>
-  <nh-dynamic-tbody [data]="[{v1: 'v1', v2: 'v2'}, {v1: 'v3', v2: 'v4'}]"></nh-dynamic-tbody>
+<h1>Dynamic Thead</h1>
+<h2>Simple</h2>
+<table border="1">
+  <nh-dynamic-thead [headers]="headers"></nh-dynamic-thead>
 </table>
+<h2>Default With Select All and Actions</h2>
+<table border="1">
+  <nh-dynamic-thead
+    [showActions]="showActions"
+    [showSelectAll]="showSelectAll"
+    [headers]="headers">
+  </nh-dynamic-thead>
+</table>
+
+<h2>Using templates</h2>
+<table border="1">
+  <nh-dynamic-thead
+    [showSelectAll]="showSelectAll"
+    [showActions]="showActions"
+    [actionsTemplate]="actionsTemplate"
+    [selectAllTemplate]="selectAllTemplate"
+    [headerTemplate]="headerTemplate"
+    [headers]="headers"
+    [headersWidth]="[100, 200]">
+  </nh-dynamic-thead>
+</table>
+
+<ng-template #selectAllTemplate>
+    <th>
+      <input type="checkbox">
+      Custom Select All Header
+    </th>
+  </ng-template>
+
+<ng-template let-header="header" let-index="index" let-width="width" #headerTemplate>
+  <th [width]="width">
+    {{ header }} - {{ index }}
+  </th>
+</ng-template>
+
+<ng-template #actionsTemplate>
+  <th>
+    Custom Actions Header
+  </th>
+</ng-template>
